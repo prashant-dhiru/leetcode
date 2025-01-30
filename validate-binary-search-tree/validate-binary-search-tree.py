@@ -1,3 +1,6 @@
+from typing import Optional
+
+# Definition for a binary tree node.
 class TreeNode:
     def __init__(self, val=0, left=None, right=None):
         self.val = val
@@ -5,21 +8,16 @@ class TreeNode:
         self.right = right
 
 class Solution:
-    def goodNodes(self, root: TreeNode) -> int:
-        count = 0
+    def isValidBST(self, root: Optional[TreeNode]) -> bool:
         
-        def dfs(node, curr_max):
-            nonlocal count
+        def dfs(node, left, right):
             if not node:
-                return
+                return True
             
-            if node.val >= curr_max:
-                curr_max = node.val
-                count +=1
-            
-            dfs(node.left, curr_max)
-            dfs(node.right, curr_max)
+            if left < node.val and node.val< right:
+                return dfs(node.left, left, node.val) and \
+                dfs(node.right, node.val, right)
+            else:
+                return False
 
-
-        dfs(root, root.val)
-        return count
+        return dfs(root, float("-inf"), float("inf"))
