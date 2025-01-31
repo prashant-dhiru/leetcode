@@ -1,0 +1,33 @@
+from typing import Optional
+
+# Definition for a binary tree node.
+
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+class Solution:
+    def kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
+        # inorder traversal will fill our inorder array in increasing order
+        inorder = list()
+
+        def dfs(curr):
+            nonlocal inorder
+            if not curr:
+                return 
+            
+            dfs(curr.left)
+            if len(inorder) >= k:
+                return    
+            inorder.append(curr.val)
+            dfs(curr.right)
+        
+        dfs(root)
+        return inorder.pop()
+            
+
+
+
+
